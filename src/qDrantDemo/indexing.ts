@@ -2,15 +2,15 @@ import { QdrantClient } from "@qdrant/js-client-rest";
 import "dotenv/config";
 
 const client = new QdrantClient({
-  url: process.env.QDRANT_URL,
-  apiKey: process.env.QDRANT_API_KEY,
+    url: process.env.QDRANT_URL,
+    apiKey: process.env.QDRANT_API_KEY,
 });
 
 await client.createCollection("items", {
     vectors: { size: 384, distance: "Cosine" },
-  });
+});
 
-let menuItems = [
+const menuItems = [
     [
         "Pad Thai with Tofu",
         "Stir-fried rice noodles with tofu bean sprouts scallions and crushed peanuts in traditional tamarind sauce",
@@ -198,20 +198,20 @@ const points: any[] = [];
 let idx = 0;
 
 for (const menuItem of menuItems) {
-  points.push({
-    id: idx,
-    vector: {
-        text: `${menuItem[0]} ${menuItem[1]}`,
-        model: "sentence-transformers/all-MiniLM-L6-v2",
-    },
-    payload: {
-      item_name: menuItem[0],
-      description: menuItem[1],
-      price: menuItem[2],
-      category: menuItem[3],
-    },
-  });
-  idx++;
+    points.push({
+        id: idx,
+        vector: {
+            text: `${menuItem[0]} ${menuItem[1]}`,
+            model: "sentence-transformers/all-MiniLM-L6-v2",
+        },
+        payload: {
+            item_name: menuItem[0],
+            description: menuItem[1],
+            price: menuItem[2],
+            category: menuItem[3],
+        },
+    });
+    idx++;
 }
 
 // upsert points to collection
